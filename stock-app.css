@@ -1,0 +1,17 @@
+h2 {
+	display: inline;
+	margin-right: 3em;
+}
+
+.stock-info{
+	margin-top: 20px;
+	width: 200px;
+	height: 100px;
+	border: solid 1px black;
+	padding: 10px 20px;
+}
+/*
+span {
+	position: relative;
+	/*right: -40px;*/
+}*/

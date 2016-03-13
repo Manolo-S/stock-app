@@ -9,10 +9,17 @@
     </script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js">
     </script>
+    <link href="stock-app.css" rel="stylesheet">
+
 </head>
 <body>
 
     <div id="container" style="height: 400px; min-width: 310px"></div>
+    <form action="">
+    <input id="stock" type="text" placeholder="Stock code">
+    <input type="submit" value="Add">
+    </form>
+    <div id="stock-codes"></div>
 
     <script src="/socket.io/socket.io.js">
     </script> 
