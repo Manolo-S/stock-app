@@ -39,6 +39,9 @@ h4 {
 a {
 	color: #cccccc;
 	position: absolute;
+	top: 10px;
 	right: 20px;
+	font-size: 1.4em;
+	cursor: pointer;
 }
 
