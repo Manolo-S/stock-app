@@ -1,14 +1,7 @@
-//TODO:
-//1) make mobile first - responsive
-//2) make data retrieval more efficient. e.g. don't request data for every stock every time
-//   smomething changes
-//3) integrate add button with input box
-
-
 $(function() {
     var seriesOptions = [],
         seriesCounter = 0,
-        codesArr = [],
+        codesArr = ['GOOG'],
         socket = io();
 
     $('form').submit(function(event) {
@@ -21,21 +14,15 @@ $(function() {
             codesArr.push(stock);
             $('#stock').val('');
             getData();
-        } else if (!codes[stock]){
+        } else {
             alert('stock code is not available or does not exist')
         }
-    });
-
-    socket.on('initialize', function(data){
-            codesArr = data;
-            getData();
     });
 
     socket.on('add_stock', function(stock){
         codesArr.push(stock);
         console.log('stock received', stock, codesArr)
         seriesCounter = 0;
-        seriesOptions = [];
         getData();
     });
 
@@ -47,7 +34,13 @@ $(function() {
        getData();
     })
 
-    
+    function dataAvailable (name){
+      var available = false;
+      seriesOptions.map(function(serie){
+        if (serie['name'] === name){available = true; console.log('seriesoptions already has ', name , 'data')};
+      });
+      return available;
+    }
 
     function createDivs(name){
         $('#stock-codes').append('<div class="stock-info" id="' + name + '"><a class="X">&#128473;</a><h2>' + name + '</h2><h4>' + codes[name] + '</h4></div>');
@@ -57,22 +50,18 @@ $(function() {
         console.log('get data called');
         console.log('codesArr begin getdata', codesArr);
         $.each(codesArr, function(i, name) {
+           if (!(dataAvailable(name))){
             $.getJSON(
-                'https://www.quandl.com/api/v3/datasets/WIKI/' +
-                name +
+                'https://www.quandl.com/api/v3/datasets/WIKI/' + name +
                 '/data.json?order=asc&exclude_column_codesArr=true&column_index=4&api_key=NtyuDaeuf42LJ3wd1p6M',
                 function(data) {
                     if (data.dataset_data.data === undefined){console.log('no data available on stock'); return};
-                    var stock_data = data.dataset_data.data.map(
-                        formatDate)
+                    var stock_data = data.dataset_data.data.map(formatDate);
                     seriesOptions[i] = {
                         name: name,
                         data: stock_data
                     };
 
-                    console.log('seriesOptions', seriesOptions)
-                    // As we're loading the data asynchronously, we don't know what order it will arrive. So
-                    // we keep a counter and create the chart when all the data is loaded.
                     seriesCounter += 1;
                     console.log('seriesCounter', seriesCounter);
                     if (seriesCounter === codesArr.length) {
@@ -92,6 +81,7 @@ $(function() {
                         });
                     }
                 });
+              }
         });
     }
 
@@ -136,7 +126,7 @@ $(function() {
         });
     }
 
-    // getData();
+    getData();
 
     var codes = { AAL: 'American Airlines Group, Inc.',
                   AAMC: 'Altisource Asset Management Corp',
