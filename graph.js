@@ -2,10 +2,12 @@ $(function() {
     var seriesOptions = [],
         seriesCounter = 0,
         names = ['GOOG'];
-    $('form').submit(function() {
+    $('form').submit(function(event) {
         event.preventDefault();
+        console.log('form submitted');
         seriesCounter = 0;
         names.push($('#stock').val());
+        console.log(names);
         $('#stock').val('');
         getData();
     });
@@ -13,7 +15,7 @@ $(function() {
     
 
     function createDivs(name){
-        $('#stock-codes').append('<div class="stock-info" id="' + name + '"><h2>' + name + '</h2><span>X</span><h4>' + codes[name] + '</h4></div>');
+        $('#stock-codes').append('<div class="stock-info" id="' + name + '"><h2>' + name + '</h2><input class="X" type="submit" value="X"><h4>' + codes[name] + '</h4></div>');
     }
 
     function getData() {
@@ -24,11 +26,11 @@ $(function() {
                 name +
                 '/data.json?order=asc&exclude_column_names=true&column_index=4&api_key=NtyuDaeuf42LJ3wd1p6M',
                 function(data) {
-                    var data = data.dataset_data.data.map(
+                    var stock_data = data.dataset_data.data.map(
                         formatDate)
                     seriesOptions[i] = {
                         name: name,
-                        data: data
+                        data: stock_data
                     };
                     // As we're loading the data asynchronously, we don't know what order it will arrive. So
                     // we keep a counter and create the chart when all the data is loaded.
@@ -37,13 +39,15 @@ $(function() {
                         createChart();
                         $('#stock-codes').empty();
                         names.map(createDivs);
-                    $('.stock-info').click(function(event){
-                         $(event.target).remove();
-                         var stock = $(event.target).attr('id');
+                    $('.X').click(function(event){
+                         event.preventDefault();
+                         var stock = $(event.target).closest('div').attr('id');
+                         console.log('stock', stock)
+                         $(event.target).closest('div').remove();
                          names.splice(names.indexOf(stock), 1);
+                         console.log('names after splice', names);
                          seriesCounter = 0;
                          getData();
-
                     });
                     }
                 });
