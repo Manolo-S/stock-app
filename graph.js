@@ -23,12 +23,15 @@ $(function() {
         codesArr.push(stock);
         console.log('stock received', stock, codesArr)
         seriesCounter = 0;
+        seriesOptions = [];
         getData();
     });
 
     socket.on('remove_stock', function(stock){
        codesArr.splice(codesArr.indexOf(stock), 1);
+       console.log('codeArr remove_stock', codesArr);
        seriesCounter = 0;
+       seriesOptions = [];
        getData();
     })
 
@@ -40,6 +43,7 @@ $(function() {
 
     function getData() {
         console.log('get data called');
+        console.log('codesArr begin getdata', codesArr);
         $.each(codesArr, function(i, name) {
             $.getJSON(
                 'https://www.quandl.com/api/v3/datasets/WIKI/' +
@@ -52,9 +56,12 @@ $(function() {
                         name: name,
                         data: stock_data
                     };
+
+                    console.log('seriesOptions', seriesOptions)
                     // As we're loading the data asynchronously, we don't know what order it will arrive. So
                     // we keep a counter and create the chart when all the data is loaded.
                     seriesCounter += 1;
+                    console.log('seriesCounter', seriesCounter);
                     if (seriesCounter === codesArr.length) {
                         createChart();
                         $('#stock-codes').empty();
@@ -65,7 +72,9 @@ $(function() {
                              socket.emit('remove_stock', stock);
                              $(event.target).closest('div').remove();
                              codesArr.splice(codesArr.indexOf(stock), 1);
+                             console.log('X remove',  codesArr)
                              seriesCounter = 0;
+                             seriesOptions = [];
                              getData();
                         });
                     }

@@ -12,15 +12,18 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
 	console.log('a user connected');
+
 	socket.on('disconnect', function(){
     	console.log('user disconnected');
   	});
+
   	socket.on('add_stock', function(stock){
-  		console.log('server receveived add_stock', stock)
+  		console.log('server received add_stock', stock)
   		socket.broadcast.emit('add_stock', stock);
   	});
+
   	socket.on('remove_stock', function(stock){
-  		console.log('server receveived remove_stock', stock)
+  		console.log('server received remove_stock', stock)
   		socket.broadcast.emit('remove_stock', stock);
   	});
 });
@@ -28,3 +31,5 @@ io.on('connection', function(socket){
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });
+
+
