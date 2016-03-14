@@ -15,6 +15,14 @@ io.on('connection', function(socket){
 	socket.on('disconnect', function(){
     	console.log('user disconnected');
   	});
+  	socket.on('add_stock', function(stock){
+  		console.log('server receveived add_stock', stock)
+  		socket.broadcast.emit('add_stock', stock);
+  	});
+  	socket.on('remove_stock', function(stock){
+  		console.log('server receveived remove_stock', stock)
+  		socket.broadcast.emit('remove_stock', stock);
+  	});
 });
 
 http.listen(3000, function(){

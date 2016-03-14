@@ -1,30 +1,50 @@
 $(function() {
     var seriesOptions = [],
         seriesCounter = 0,
-        names = ['GOOG'];
+        codesArr = ['GOOG'],
+        socket = io();
+
     $('form').submit(function(event) {
         event.preventDefault();
-        console.log('form submitted');
         seriesCounter = 0;
-        names.push($('#stock').val());
-        console.log(names);
-        $('#stock').val('');
+        var stock = $('#stock').val();
+        console.log(codes[stock]);
+        if (codes[stock] && codesArr.indexOf(stock) === -1){
+            socket.emit('add_stock', stock);
+            codesArr.push(stock);
+            $('#stock').val('');
+            getData();
+        } else {
+            alert('stock code is not available or does not exist')
+        }
+    });
+
+    socket.on('add_stock', function(stock){
+        codesArr.push(stock);
+        console.log('stock received', stock, codesArr)
+        seriesCounter = 0;
         getData();
     });
+
+    socket.on('remove_stock', function(stock){
+       codesArr.splice(codesArr.indexOf(stock), 1);
+       seriesCounter = 0;
+       getData();
+    })
 
     
 
     function createDivs(name){
-        $('#stock-codes').append('<div class="stock-info" id="' + name + '"><h2>' + name + '</h2><input class="X" type="submit" value="X"><h4>' + codes[name] + '</h4></div>');
+        $('#stock-codes').append('<div class="stock-info" id="' + name + '"><h2>' + name + '</h2><a class="X">&#128473;</a><h4>' + codes[name] + '</h4></div>');
     }
 
     function getData() {
         console.log('get data called');
-        $.each(names, function(i, name) {
+        $.each(codesArr, function(i, name) {
             $.getJSON(
                 'https://www.quandl.com/api/v3/datasets/WIKI/' +
                 name +
-                '/data.json?order=asc&exclude_column_names=true&column_index=4&api_key=NtyuDaeuf42LJ3wd1p6M',
+                '/data.json?order=asc&exclude_column_codesArr=true&column_index=4&api_key=NtyuDaeuf42LJ3wd1p6M',
                 function(data) {
                     var stock_data = data.dataset_data.data.map(
                         formatDate)
@@ -35,20 +55,19 @@ $(function() {
                     // As we're loading the data asynchronously, we don't know what order it will arrive. So
                     // we keep a counter and create the chart when all the data is loaded.
                     seriesCounter += 1;
-                    if (seriesCounter === names.length) {
+                    if (seriesCounter === codesArr.length) {
                         createChart();
                         $('#stock-codes').empty();
-                        names.map(createDivs);
-                    $('.X').click(function(event){
-                         event.preventDefault();
-                         var stock = $(event.target).closest('div').attr('id');
-                         console.log('stock', stock)
-                         $(event.target).closest('div').remove();
-                         names.splice(names.indexOf(stock), 1);
-                         console.log('names after splice', names);
-                         seriesCounter = 0;
-                         getData();
-                    });
+                        codesArr.map(createDivs);
+                        $('.X').click(function(event){
+                             event.preventDefault();
+                             var stock = $(event.target).closest('div').attr('id');
+                             socket.emit('remove_stock', stock);
+                             $(event.target).closest('div').remove();
+                             codesArr.splice(codesArr.indexOf(stock), 1);
+                             seriesCounter = 0;
+                             getData();
+                        });
                     }
                 });
         });
