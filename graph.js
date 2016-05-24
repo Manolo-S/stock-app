@@ -3,7 +3,6 @@
 //2) make data retrieval more efficient. e.g. don't request data for every stock every time
 //   smomething changes
 //3) integrate add button with input box
-//4) replace X symbol with a symbol that renders on all/most machines
 
 
 $(function() {
@@ -52,7 +51,6 @@ $(function() {
 
     function createDivs(name){
         $('#stock-codes').append('<div class="stock-info" id="' + name + '"><a class="X">&#215;</a><h2>' + name + '</h2><h4>' + codes[name] + '</h4></div>');
-        // $('#stock-codes').append('<div class="stock-info" id="' + name + '"><a class="X">&#128473;</a><h2>' + name + '</h2><h4>' + codes[name] + '</h4></div>');
     }
 
     function getData() {

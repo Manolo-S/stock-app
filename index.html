@@ -1,39 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Stock app</title>
-    <script src="jquery-2.2.1.min.js">
-    </script>
-    <script src="highstock.4.2.3.js">
-    </script>
-    <script src="highcharts-exporting.4.2.3js">
-    </script>
-    <link href="stock-app.css" rel="stylesheet">
-</head>
-<body>
-    <div id="container" style="height: 400px; min-width: 310px"></div>
-    <form action="">
-    <input id="stock" type="text" placeholder=" Stock code">
-    <input type="submit" value="Add">
-    </form>
-    <div id="stock-codes"></div>
-    <script src="/socket.io/socket.io.js"></script> 
-    <script src="graph.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Stock app</title>
+        <script src="jquery-2.2.1.min.js">
+        </script>
+        <script src="highstock.4.2.3.js">
+        </script>
+        <script src="highcharts-exporting.4.2.3js">
+        </script>
+        <link href="stock-app.css" rel="stylesheet">
+    </head>
+    <body>
+        <h1>Stock App</h1>
+        <div id="container" style="height: 400px; min-width: 310px"></div>
+        <form action="">
+            <input id="stock" type="text" placeholder=" Stock code">
+            <input type="submit" value="Add">
+        </form>
+        <div id="stock-codes"></div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="graph.js"></script>
+    </body>
 </html>
 
-
-
-
-
-
-<!--<script src="https://code.highcharts.com/stock/modules/exporting.js">
-    </script>-->
-
-    <!--<script src="https://code.highcharts.com/stock/highstock.js">
-    </script>-->
-
-
-   <!--  <script src="https://code.jquery.com/jquery-2.2.1.js">
-    </script> -->
