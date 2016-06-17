@@ -4,10 +4,6 @@ body {
 	margin: 0 auto;
 }
 
-/*#container {
-	margin-top: 10%;
-}*/
-
 h1 {
 	font-size: 2.5em;
 }
@@ -33,8 +29,8 @@ h4 {
 	display: inline-block;
 	margin: 20px 20px;
 
-	width: 200px;
-	height: 100px;
+	width: 14em;
+	height: 10em;
 	border: solid 1px black;
 	padding: 15px 20px;
 	float: left;
@@ -48,4 +44,6 @@ a {
 	font-size: 1.4em;
 	cursor: pointer;
 }
+
+
 
