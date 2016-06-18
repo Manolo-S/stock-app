@@ -1,11 +1,14 @@
 body {
 	font-family: Verdana, sans-serif;
-	width: 90%;
-	margin: 0 auto;
+	/*margin: 0 auto;*/
 }
 
 h1 {
 	font-size: 2.5em;
+	font-weight: 700;
+	color: white;
+	background-color: #232F3F;
+	padding: 1em 0em 1em 2em;
 }
 
 h2 {
@@ -17,7 +20,7 @@ h2 {
 
 h4 {
 	font-weight: lighter;
-	color: #aaaaaa;
+	color: #000;
 }
 
 #stock{
@@ -44,6 +47,5 @@ a {
 	font-size: 1.4em;
 	cursor: pointer;
 }
-
 
 

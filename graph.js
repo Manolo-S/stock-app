@@ -1,10 +1,3 @@
-//TODO:
-//1) make mobile first - responsive
-//2) make data retrieval more efficient. e.g. don't request data for every stock every time
-//   smomething changes
-//3) integrate add button with input box
-
-
 $(function() {
     var seriesOptions = [],
         seriesCounter = 0,
@@ -137,6 +130,8 @@ $(function() {
     }
 
     // getData();
+
+    window.dispatchEvent(new Event('resize'));
 
     var codes = { AAL: 'American Airlines Group, Inc.',
                   AAMC: 'Altisource Asset Management Corp',
