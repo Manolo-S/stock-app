@@ -19,6 +19,11 @@ $(function() {
         }
     });
 
+    $('#help').click(function(e){
+      e.preventDefault();
+      $('#helpModal').modal('show');
+    })
+
     socket.on('initialize', function(data){
             codesArr = data;
             getData();

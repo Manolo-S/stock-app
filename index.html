@@ -11,10 +11,17 @@
         <script src="highcharts-exporting.4.2.3js">
         </script>
         <link href="stock-app.css" rel="stylesheet">
+        <script>
+            $(window).load(function() {
+            $(".loader").fadeOut("slow");
+            })
+        </script>
     </head>
     <body>
+        <div class="loader"></div>        
         <div class="container">
         <h1>NYSE Stock Info</h1>
+        <a href='#' id='help'>Help</a>
             <div class ="row">
                 <div class="col-xs-12">
                     <div id="container"></div>
@@ -25,6 +32,9 @@
                     <div id="stock-codes"></div>
                 </div>
             </div>
+        <div class='container'>
+            <% include ./helpmodal %>
+        </div>
         <script src="bootstrap.min.js"></script>            
         <script src="/socket.io/socket.io.js"></script>
         <script src="graph.js"></script>
