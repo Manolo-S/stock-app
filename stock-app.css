@@ -64,3 +64,7 @@ a {
     z-index: 9999;
     background: url('../page-loader.gif') 50% 50% no-repeat #fff;
 }
+
+.question {
+	font-weight: bold;
+}
