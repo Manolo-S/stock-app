@@ -7,7 +7,7 @@ $(function() {
     $('form').submit(function(event) {
         event.preventDefault();
         seriesCounter = 0;
-        var stock = $('#stock').val();
+        var stock = ($('#stock').val()).toUpperCase();
         console.log(codes[stock]);
         if (codes[stock] && codesArr.indexOf(stock) === -1){
             socket.emit('add_stock', stock);
