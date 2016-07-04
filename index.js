@@ -6,8 +6,10 @@ var path = require('path');
 app.use(express.static(path.join(__dirname, '/')));
 var codesArr = ["GOOG"];
 
+app.set('view engine', 'ejs');
+
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+  res.render('index');
 });
 
 io.on('connection', function(socket){

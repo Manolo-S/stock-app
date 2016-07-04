@@ -3,12 +3,16 @@ body {
 	/*margin: 0 auto;*/
 }
 
+#help {
+	float: right;
+}
+
 h1 {
 	font-size: 1.5em;
 	color: white;
 	background-color: #232F3F;
 	padding: 0.5em 0em 0.5em 2em;
-	display: inline-block;
+	clear: both;
 }
 
 h2 {
